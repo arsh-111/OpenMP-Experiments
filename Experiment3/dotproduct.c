@@ -8,6 +8,9 @@ double arr1[10000],arr2[10000];
     
         for(int i=0;i<10000;i++){
         arr1[i]= i +2.0;
+        }
+
+	for(int i=10000;i>0;i--){
         arr2[i] = i+4.0;
         }
         double end1 = omp_get_wtime();
@@ -20,7 +23,7 @@ double arr1[10000],arr2[10000];
         printf("Sacaler sum %f\n",temp);
         printf("First For Loop Time1 %f\n",end1-start1);
         printf("Second For Loop Time2 %f\n",end2-start2);
-        printf("Total Time for parallel Execution %f\n",(end2-start2) + (end1-start1));
+        printf("Total Time for sequential Execution %f\n",(end2-start2) + (end1-start1));
 
 }
 
@@ -32,9 +35,12 @@ int main(){
 	double start1 = omp_get_wtime();
 	#pragma omp parallel for
 	for(int i=0;i<10000;i++){
-	arr1[i]= i +2.0;
-	arr2[i] = i+4.0;
-	}
+        arr1[i]= i +2.0;
+        }
+	#pragma omp parllel for
+        for(int i=10000;i>0;i--){
+        arr2[i] = i+4.0;
+        }
 	double end1 = omp_get_wtime();
 	double start2 = omp_get_wtime();
 	#pragma omp parallel for reduction(+:temp)
