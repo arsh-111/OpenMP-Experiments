@@ -1,11 +1,12 @@
 #include<stdio.h>
 #include<omp.h>
 double fibbo_serial(int n) { 
-    double a = 0, b = 1, temp;
-    
+    double a = 1, b = 0;
+    double temp;
     double start = omp_get_wtime();
     for (int i = 0; i < n; i++) {
-        temp = a + b;
+        
+	temp = a + b;
         a = b;
         b = temp;
     }
@@ -25,7 +26,8 @@ double fibbo(int n){
 	for(int i = 0;i<n;i++){
 	
 	#pragma omp critical
-	{	
+	{
+	
 	temp = a+b;
 	a=b;
 	b=temp;
@@ -42,8 +44,8 @@ double fibbo(int n){
 
 int main(){
 	double tserial,tparallel;
-	tparallel = fibbo(10000000);
-	tserial = fibbo_serial(10000000);
+	tparallel = fibbo(10000);
+	tserial = fibbo_serial(10000);
 	printf("Speedup = %f", tserial/tparallel);
 
 
